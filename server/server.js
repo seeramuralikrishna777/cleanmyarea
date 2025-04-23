@@ -7,6 +7,7 @@ const issuesRouter = require('./routes/issuesRouter.js');
 const bugRouter = require('./routes/bugRouter.js');
 const adminRouter = require('./routes/adminRouter.js');
 const userRouter = require('./routes/userRouter.js');
+const testClassifierRouter = require('./routes/testClassifierRouter.js'); // Import the new router
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -42,16 +43,14 @@ app.get('/', (req, res) => {
   res.send("Server is running.")
 })
 
-app.use('/api/gemini', upload.single('photo'));
+// Apply multer middleware *before* the router for routes needing file uploads
+app.use('/api/gemini', upload.single('photo'), geminiRouter); // Apply middleware and router together
+app.use('/api/test-classify', upload.single('image'), testClassifierRouter); // Use 'image' as the field name, matching the MCP example
 
-app.use('/api/gemini', geminiRouter);
-
+// Other routes that don't need file uploads
 app.use('/api/issues', issuesRouter);
-
 app.use('/api/bugs', bugRouter);
-
 app.use('/api/admin', adminRouter);
-
 app.use('/api/ip', userRouter);
 
 app.listen(PORT, () => {
