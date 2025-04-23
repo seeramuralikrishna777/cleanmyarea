@@ -11,6 +11,7 @@ import os
 from icrawler.builtin import BingImageCrawler
 from PIL import Image
 import pandas as pd
+import shutil  
 
 # 3) Configuration
 # ----------------
@@ -22,7 +23,7 @@ category_queries = {
         "broken streets"
     ],
     "Garden": [
-        "overgrown public parks",
+        "falled tree on indian roads",
         "unclean garden areas",
         "damaged park benches"
     ],
@@ -32,19 +33,19 @@ category_queries = {
         "streetlight not working"
     ],
     "Drainage": [
-        "open drainage",
-        "clogged sewer",
-        "overflowing drainage"
+        "open drainage roadside india",
+        "clogged sewer on roads in india",
+        "overflowing drainage in india"
     ],
     "Health & Hygiene": [
-        "garbage on streets",
-        "dirty public toilets",
-        "unsanitary conditions"
+        "garbage on streets in india",
+        "dirty public toilets in india",
+        "unsanitary conditions in india"
     ],
     "Water": [
-        "water pipe leakage",
-        "open water valve",
-        "water logging"
+        "water pipe leakage in india",
+        "open water valve in india",
+        "water logging in india"
     ],
     "Animals": [
         "stray dogs on road",
@@ -54,7 +55,7 @@ category_queries = {
 }
 
 # Number of images per query
-MAX_PER_QUERY = 200
+MAX_PER_QUERY = 400
 
 # Base directories
 DOWNLOAD_DIR  = "/kaggle/working/images"            # raw downloads
@@ -128,7 +129,11 @@ if __name__ == "__main__":
     print("\nResizing & labeling...")
     process_and_label()
     
+    # Cleanup: remove raw downloaded images
+    if os.path.exists(DOWNLOAD_DIR):
+        shutil.rmtree(DOWNLOAD_DIR)
+        print(f"\n✓ Removed raw images directory: {DOWNLOAD_DIR}")
+    
     print("\nAll done! You now have:")
-    print(f" • Raw images:    {DOWNLOAD_DIR}")
-    print(f" • Processed:     {OUTPUT_DIR}")
-    print(f" • CSV labels:    {CSV_PATH}")
+    print(f" • Processed images: {OUTPUT_DIR}")
+    print(f" • CSV labels:       {CSV_PATH}")
