@@ -1,4 +1,4 @@
-# CivicPulse Web App
+# Cleanmyarea Web App
 
 CivicPulse is a web application designed to allow users to report and track community issues such as road damage, drainage problems, and more. The application includes a public-facing frontend for reporting and viewing issues and an admin panel for managing reports and users.
 
